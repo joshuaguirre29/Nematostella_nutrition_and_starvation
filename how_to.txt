@@ -1,1 +1,3 @@
+Follo TagSeq pipeline as described here: https://github.com/z0on/tag-based_RNAseq
+
 
