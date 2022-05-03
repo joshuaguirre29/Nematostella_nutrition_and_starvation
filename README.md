@@ -1,1 +1,2 @@
+Supplementary gene expression material for Aguirre et. al. 2022.
 Herein, we describe a connection between nutrition and immunity in the sea anemone Nematostella vectensis. An RNA-seq (TagSeq) comparison of adult fed and starved anemones showed downregulation of many genes involved in nutrient metabolism and cellular respiration, as well as immune-related genes. We also found, through Weighted Gene Correlation Network Analysis (WGCNA), significantly correlated gene networks that are inversely associated with starvation.
