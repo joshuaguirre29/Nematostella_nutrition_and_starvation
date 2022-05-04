@@ -1,0 +1,17 @@
+Anemone	Clone_parent	Origin_end	Feeding_regime	File_label	Raw_reads
+1F	1	Oral	Fed	1OF	8,249,165
+1S	1	Aboral	Starved	1AS	6,043,016
+2F	2	Oral	Fed	2OF	5,891,586
+2S	2	Aboral	Starved	2AS	6,095,160
+3F	3	Oral	Fed	4OF	9,197,316
+3S	3	Aboral	Starved	4AS	7,487,177
+4F	4	Aboral	Fed	6AF	5,402,652
+4S	4	Oral	Starved	6OS	5,448,963
+5F	5	Aboral	Fed	7AF	5,538,452
+5S	5	Oral	Starved	7OS	7,403,004
+6F	6	Aboral	Fed	8AF	5,215,428
+6S	6	Oral	Starved	8OS	8,528,160
+7F	7	Aboral	Fed	9AF	7,597,310
+7S	7	Oral	Starved	9OS	6,244,255
+8F	8	Aboral	Fed	10AF	6,604,076
+8S	8	Oral	Starved	10OS	8,152,984
