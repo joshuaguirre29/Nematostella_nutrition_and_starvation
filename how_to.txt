@@ -1,3 +1,45 @@
-Follo TagSeq pipeline as described here: https://github.com/z0on/tag-based_RNAseq
-Transfer nve_counts.txt to directory for DESeq2 script
+This text describes:
+- The order in which scripts were run
+- What files are needed for each script and where they come from
+- Output files needed to run other scripts, note that the scripts will generate additional output files that are important besides the ones indicated here
 
+### TagSeq ###
+Follow TagSeq pipeline as described here: https://github.com/z0on/tag-based_RNAseq
+#Output: nve_counts.txt
+
+### deseqNv.R ###
+Use: Differential gene expression analysis
+#Input: 
+nve_counts.txt (from TagSeq pipeline)
+#Important Output:
+Starved.txt
+Starved_GO.csv
+Starved_RLDandPVALS.cvs
+
+### GO_MWU.R ###
+Use: GO term enrichment analysis of a group of genes of interest
+#Input:
+Starved_GO.csv (from desqNv.R) OR
+green_kME.csv OR green_fisher.csv (from WGCNA.R)
+#Needed:
+go.obo
+gomwu_a.pl
+gomwu_b.pl
+nrify_GOtable.pl
+#Important Output:
+BP_Starved_GO.csv
+
+### GO_heatmap.R ###
+Use: Plots expression data for genes annotated with a GO term of interest
+#Input:
+BP_Starved_GO.csv (from GO_MWU.R)
+Starved_RLDandPVALS.cvs (from deseq.R)
+
+### WGCNA.R ###
+Use: Performs Weighted Correlation Network Analysis
+#Input:
+nve_counts.txt
+stella_wgcna_traits.csv
+#Output
+green_kME.csv
+green_fisher.csv
