@@ -1,0 +1,49 @@
+#code optimized for running on Boston University's SCC
+#use *.trim files from TagSeq pipeline
+
+module load python3
+module load bowtie2
+module load htslib/1.9
+module load samtools/1.9
+module load angsd
+module load picard
+
+bowtie2-build nveGenes.fasta nveGenes.fasta
+
+for file in *.trim
+do echo "bowtie2 -x nveGenes.fasta -U $file --local -p 4 -S ${file/.trim/}.sam">> maps
+done
+scc6_qsub_launcher.py -N mapping -P davieslab -jobsfile maps
+qsub mapping_array.qsub
+
+for file in *.sam
+do echo "samtools sort -O bam -o ${file/.sam/}.bam $file" >> sortConvert
+done
+scc6_qsub_launcher.py -N bamming -P davieslab -jobsfile sortConvert
+qsub bamming_array.qsub
+
+picard CreateSequenceDictionary R=nveGenes.fasta O=nve.dict
+
+samtools faidx nveGenes.fasta
+samtools view 1AS.fastq.bam | head
+
+for file in *.bam
+do echo "$file" >> bam_list
+done
+
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 25 -dosnpstat 1 -doHWE 1 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 13 -snp_pval 1e-5 -minMaf 0.05" #change minInd to 80% of your samples
+TODO="-doMajorMinor 1 -ref nveGenes.fasta -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 8 -doBcf 1 -doPost 1 -doGlf 2"
+
+angsd -b bam_list -GL 1 $FILTERS $TODO -P 8 -out nve_ang
+
+module load admixture
+NSITES=`zcat nve_ang.beagle.gz | wc -l`
+echo $NSITES
+#21572
+
+for K in 2 3 4; 
+do 
+NGSadmix -likes nve_ang.beagle.gz -K $K -P 10 -o admix;
+done
+
+#next, follow angsd_ibs_pca.R
