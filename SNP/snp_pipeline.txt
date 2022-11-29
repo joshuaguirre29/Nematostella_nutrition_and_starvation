@@ -1,5 +1,5 @@
 #code optimized for running on Boston University's SCC
-#use *.trim files from TagSeq pipeline
+#use *.trim files obtained from TagSeq pipeline
 
 module load python3
 module load bowtie2
